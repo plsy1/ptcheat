@@ -19,6 +19,11 @@ def decode_peerlist_from_bencode(data):
 
 def encode_peerlist_to_bencode(peers_compact):
     try:
+        # Ensure peers_compact is bytes-like
+        if isinstance(peers_compact, list):
+            # Combine list of bytes into a single bytes object
+            peers_compact = b''.join(peers_compact)
+        
         # Create a dictionary with the peers data
         bencoded_data = bencodepy.encode({b'peers': peers_compact})
         return bencoded_data
